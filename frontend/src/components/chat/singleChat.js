@@ -29,7 +29,7 @@ import animationDataFiller from "../../Animations/chatFiller.json";
 import EmojiPicker from "emoji-picker-react";
 import "./styles/singleChat.css";
 
-const ENDPOINT = "ws://localhost:5000";
+const ENDPOINT = "http://localhost:3000";
 
 var socket, selectedChatCompare;
 
