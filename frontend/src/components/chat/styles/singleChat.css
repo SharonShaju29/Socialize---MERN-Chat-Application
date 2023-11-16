@@ -1,0 +1,21 @@
+.message-wrapper {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.emoji-wrapper {
+   margin-bottom: 6px;
+   z-index: 5;
+   position: fixed;
+   transform: translateY(-101%);
+}
+
+@media screen and (max-width: 480px) {
+  .emoji-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}
