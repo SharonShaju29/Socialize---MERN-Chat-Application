@@ -163,7 +163,7 @@ const SideBar = () => {
               flexDirection={"column"}
               width={"200px"}
             >
-              {!notification.length && "No new messages"}
+              {!notification.length && <div style={{justifyContent:"center",display:"flex"}}>No new messages</div>}
               {notification.map((notif) => (
                 <MenuItem
                   key={notif._id}
