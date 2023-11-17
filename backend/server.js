@@ -47,10 +47,10 @@ const server = app.listen(
   console.log(`Server running on PORT::${PORT}`.yellow.bold)
 );
 
-const io = require("socket.io")(server, {
+const io = require("socket.io")(server, { 
   pingTimeout: 60000,
   cors: {
-    origins: ["http://localhost:3000","https://socialize-6s8z.onrender.com"]
+    origins:["https://socialize-6s8z.onrender.com"]
   },
 });
 

@@ -122,7 +122,10 @@ const SignUp = () => {
         },
         config
       );
-
+      setUser(data);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      history.push("/chats");
+      setLoading(false);
       toast({
         title: "Registration Successful",
         status: "success",
@@ -130,20 +133,18 @@ const SignUp = () => {
         isClosable: true,
         position: "bottom",
       });
-      setUser(JSON.parse(data));
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
-      history.push("/chats");
+
     } catch (error) {
+      setLoading(false);
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
+        description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false);
+   
     }
   };
 
