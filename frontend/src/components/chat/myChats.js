@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../../context/ChatProvider";
-import { Box, Button, Stack, useToast, Text, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Stack,
+  useToast,
+  Text,
+  Tooltip,
+  Avatar,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "../miscelleneous/chatLoading";
-import { getSender } from "../../config/chatLogics";
+import { getSender, getSenderInfo } from "../../config/chatLogics";
 import GroupChatModal from "../miscelleneous/GroupChatModal";
 import { useHistory } from "react-router-dom";
 
@@ -95,26 +103,72 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
       >
         {chats ? (
           <Stack overflowY={"scroll"}>
-            {chats.length > 0
-              ? chats.map((chat) => (
-                  <Box
-                    onClick={() => setSelectedChat(chat)}
-                    cursor={"pointer"}
-                    bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                    color={selectedChat === chat ? "white" : "black"}
-                    px={3}
-                    py={2}
-                    borderRadius={"lg"}
-                    key={chat._id}
+            {chats.length > 0 ? (
+              chats.map((chat) => (
+                <Box
+                  onClick={() => setSelectedChat(chat)}
+                  cursor={"pointer"}
+                  bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                  color={selectedChat === chat ? "white" : "black"}
+                  px={3}
+                  py={2}
+                  borderRadius={"lg"}
+                  key={chat._id}
+                  display={"flex"}
+                  height={"60px"}
+                >
+                  {!chat.isGroupChat ? (
+                    <div style={{ display: "grid", alignContent: "center" }}>
+                      <Avatar
+                        size="sm"
+                        cursor={"pointer"}
+                        name={getSender(loggedUser, chat.users)}
+                        src={
+                          getSenderInfo(loggedUser, chat.users).profilePicture
+                        }
+                        marginRight={"16px"}
+                        marginLeft={"8px"}
+                        alignContent={"center"}
+                      ></Avatar>
+                    </div>
+                  ) : (
+                    <div
+                      style={{
+                        fontWeight: "bold",
+                        fontStyle: "italic",
+                        fontSize: "14px",
+                        marginRight: "8px",
+                        color: "grey",
+                        alignContent: "center",
+                        display: "grid",
+                      }}
+                    >
+                      GROUP
+                    </div>
+                  )}
+                  <Text
+                    alignContent={"center"}
+                    display={"grid"}
+                    fontWeight={"semibold"}
                   >
-                    <Text>
-                      {!chat?.isGroupChat
-                        ? getSender(loggedUser, chat.users)
-                        : chat.chatName}
-                    </Text>
-                  </Box>
-                ))
-              : <div style={{height:"30vh",justifyContent:"center",alignContent:"center",display:"grid"}}>Search for Users to add your first chat</div>}
+                    {!chat?.isGroupChat
+                      ? getSender(loggedUser, chat.users)
+                      : chat.chatName}
+                  </Text>
+                </Box>
+              ))
+            ) : (
+              <div
+                style={{
+                  height: "30vh",
+                  justifyContent: "center",
+                  alignContent: "center",
+                  display: "grid",
+                }}
+              >
+                Search for Users to add your first chat
+              </div>
+            )}
           </Stack>
         ) : (
           <ChatLoading />

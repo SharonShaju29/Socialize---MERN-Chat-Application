@@ -51,13 +51,17 @@ const ProfileModal = ({ user, children }) => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody
-            fontSize={"24px"}
+            fontSize={"20px"}
             fontFamily={"Work sans"}
             fontWeight={"bold"}
             display={"flex"}
+            flexDirection={"column"}
             justifyContent={"center"}
+            flexWrap={"nowrap"}
+            padding={"8px 0"}
           >
-            {user.name}
+            <div style={{display:"flex",flexDirection:"row",justifyContent:"center",marginBottom:"4px"}}>{user.name}</div>
+            <div style={{display:"flex",flexDirection:"row",justifyContent:"center",fontSize:"16px"}}><div style={{fontStyle:"bold",color:"grey",marginRight:"8px"}}>Email:</div><div>{user.email}</div></div> 
           </ModalBody>
         </ModalContent>
       </Modal>

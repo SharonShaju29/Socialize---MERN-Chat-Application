@@ -62,44 +62,46 @@ const SideBar = () => {
     history.push("/");
   };
 
-  const handleSearch = async () => {
-    if (!search) {
-      toast({
-        title: "Please enter some value to search",
-        status: "warning",
-        duration: 5000,
-        isClosable: true,
-        position: "top-left",
-      });
-      return;
-    }
+  const handleSearch = async (e) => {
+    if (e.key === "Enter" || e.type === "click") {
+      if (!search) {
+        toast({
+          title: "Please enter some value to search",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "top-left",
+        });
+        return;
+      }
 
-    try {
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
 
-      const { data } = await axios.get(
-        `/api/user?searchQuery=${search}`,
-        config
-      );
+        const { data } = await axios.get(
+          `/api/user?searchQuery=${search}`,
+          config
+        );
 
-      setLoading(false);
-      setSearchResult(data);
-      setResultsFoundFlag(true);
-    } catch (err) {
-      toast({
-        title: "Error Occured",
-        description: "Failed to load the search results",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom-left",
-      });
+        setLoading(false);
+        setSearchResult(data);
+        setResultsFoundFlag(true);
+      } catch (err) {
+        toast({
+          title: "Error Occured",
+          description: "Failed to load the search results",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
+      }
     }
   };
 
@@ -144,7 +146,7 @@ const SideBar = () => {
       >
         <Tooltip label="Search Users" hasArrow placement="bottom-end">
           <Button variant={"ghost"} onClick={onOpen}>
-            <i class="fas fa-search" style={{ padding: "0 4px 0 0" }}></i>
+            <i class="fas fa-search"></i>
             {/* <Text display={{ base: "none", md: "flex" }}> Search User </Text> */}
           </Button>
         </Tooltip>
@@ -218,6 +220,7 @@ const SideBar = () => {
                     setSearch(e.target.value);
                     setResultsFoundFlag(false);
                   }}
+                  onKeyDown={handleSearch}
                 />
                 <Button
                   background={"gray.700"}
