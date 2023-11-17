@@ -60,7 +60,6 @@ const SideBar = () => {
     setUser(null);
     setChats([]);
     history.push("/");
-
   };
 
   const handleSearch = async () => {
@@ -156,7 +155,12 @@ const SideBar = () => {
               <NotificationBadge count={notification.length} effect={Effect} />
               <BellIcon fontSize={"2xl"} m={1}></BellIcon>
             </MenuButton>
-            <MenuList justifyContent={"center"} display={"flex"}>
+            <MenuList
+              justifyContent={"center"}
+              display={"flex"}
+              flexDirection={"column"}
+              width={"200px"}
+            >
               {!notification.length && "No new messages"}
               {notification.map((notif) => (
                 <MenuItem
