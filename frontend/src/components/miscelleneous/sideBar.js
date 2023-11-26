@@ -117,7 +117,7 @@ const SideBar = () => {
 
       const { data } = await axios.post("/api/chat", { userId }, config);
 
-      setSelectedChat(data);
+      setSelectedChat(data[0]);
       setLoadingChat(false);
       onClose();
     } catch (err) {
@@ -163,7 +163,11 @@ const SideBar = () => {
               flexDirection={"column"}
               width={"200px"}
             >
-              {!notification.length && <div style={{justifyContent:"center",display:"flex"}}>No new messages</div>}
+              {!notification.length && (
+                <div style={{ justifyContent: "center", display: "flex" }}>
+                  No new messages
+                </div>
+              )}
               {notification.map((notif) => (
                 <MenuItem
                   key={notif._id}
@@ -193,7 +197,7 @@ const SideBar = () => {
                 src={user.pic}
               ></Avatar>
             </MenuButton>
-            <MenuList fontSize={"14px"}>
+            <MenuList fontWeight={"bold"} fontSize={"16px"}>
               <ProfileModal user={user}>
                 <MenuItem>My Profile</MenuItem>
               </ProfileModal>

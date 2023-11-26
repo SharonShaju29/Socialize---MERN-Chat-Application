@@ -34,8 +34,15 @@ const ENDPOINT = "https://socialize-6s8z.onrender.com";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
-  const { user, selectedChat, setSelectedChat, notification, setNotification } =
-    ChatState();
+  const {
+    user,
+    selectedChat,
+    setChats,
+    chats,
+    setSelectedChat,
+    notification,
+    setNotification,
+  } = ChatState();
 
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -133,6 +140,12 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
         socket.emit("newMessage", data);
         setMessages([...messages, data]);
+        if (selectedChat) {
+          const filteredChats = chats.filter(
+            (chat) => chat._id !== selectedChat._id
+          );
+          setChats([selectedChat, ...filteredChats]);
+        }
         setScrollBottom(!scrollBottom);
       } catch (error) {
         toast({
@@ -177,6 +190,14 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
 
   useEffect(() => {
+    if (selectedChat) {
+      const filteredChats = chats.filter(
+        (chat) => chat._id !== selectedChat._id
+      );
+      if (chats.length === filteredChats.length) {
+        setChats([selectedChat, ...filteredChats]);
+      }
+    }
     fetchMessages();
 
     selectedChatCompare = selectedChat;

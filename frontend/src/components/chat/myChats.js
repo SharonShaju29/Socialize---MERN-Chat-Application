@@ -8,6 +8,11 @@ import {
   Text,
   Tooltip,
   Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
@@ -15,6 +20,7 @@ import ChatLoading from "../miscelleneous/chatLoading";
 import { getSender, getSenderInfo } from "../../config/chatLogics";
 import GroupChatModal from "../miscelleneous/GroupChatModal";
 import { useHistory } from "react-router-dom";
+import CreateChatModal from "../miscelleneous/createChatModal";
 
 const MyChats = ({ fetchAgain, setFetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState([]);
@@ -65,7 +71,7 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
       <Box
         pb={3}
         px={3}
-        fontSize={{ base: "20px", md: "24px" }}
+        fontSize={{ base: "22px", md: "26px" }}
         fontFamily={"Work sans"}
         fontWeight={"bold"}
         display={"flex"}
@@ -74,22 +80,41 @@ const MyChats = ({ fetchAgain, setFetchAgain }) => {
         alignItems={"center"}
       >
         My Chats
-        <GroupChatModal>
-          <Tooltip
-            label={"Create new group"}
-            placement={"bottom-start"}
-            hasArrow
+        <Menu placement={"bottom-end"}>
+          <MenuButton p={"1"}>
+            <Tooltip label={"Add"} placement={"bottom-start"} hasArrow>
+              <Button
+                display={"flex"}
+                fontSize={{ base: "17px", md: "10px", lg: "16px" }}
+                width={"12px"}
+                background={"gray.700"}
+              >
+                <AddIcon color={"blue.400"} />
+              </Button>
+            </Tooltip>
+          </MenuButton>
+          <MenuList
+            justifyContent={"center"}
+            display={"flex"}
+            flexDirection={"column"}
+            role="menu"
+            whiteSpace={"pre-wrap"}
           >
-            <Button
-              display={"flex"}
-              fontSize={{ base: "17px", md: "10px", lg: "16px" }}
-              width={"12px"}
-              background={"gray.700"}
-            >
-              <AddIcon color={"blue.400"} />
-            </Button>
-          </Tooltip>
-        </GroupChatModal>
+            <MenuItem fontWeight={"bold"} fontSize={"16px"}>
+              <CreateChatModal>
+                <div style={{ paddingRight: "150px" }}>New chat</div>
+              </CreateChatModal>
+            </MenuItem>
+            <center>
+              <MenuDivider />
+            </center>
+            <MenuItem fontWeight={"bold"} fontSize={"16px"}>
+              <GroupChatModal>
+                <div style={{ paddingRight: "150px" }}>New group</div>
+              </GroupChatModal>
+            </MenuItem>
+          </MenuList>
+        </Menu>
       </Box>
       <Box
         display={"flex"}
